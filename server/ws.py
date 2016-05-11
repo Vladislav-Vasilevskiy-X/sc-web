@@ -107,7 +107,7 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
         key = self.get_secure_cookie(base.BaseHandler.cookie_user_key, None, 1)
         
         database = db.DataBase()
-        canEdit = False
+        canEdit = True
         u = database.get_user_by_key(key)
         if u:
             canEdit = base.User._canEdit(database.get_user_role(u).rights)
