@@ -184,8 +184,11 @@
                   </table>
             </div>
             <div class="modal-footer">
+		<div class="form-group">
+		  <label for="new-task-input">New task:</label>
+		  <input type="text" class="form-control" id="new-task-input">
+		</div>
 		<button type="button" id = "add-task-btn" class="btn btn-default">Add Task</button>
-		<button type="button" id = "refresh-btn" class="btn btn-default">Refresh Tasks List</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
@@ -203,7 +206,7 @@
 					window.scHelper.getIdentifier(list_elements_addresses[i], scKeynodes.lang_ru).done(function(idtf){
 					out += "<tr><td>" + idtf + "</td></tr>";
 					document.getElementById("tasks-table").innerHTML = out;
-				})
+				});
 				}
 			});
 		});	
@@ -221,20 +224,17 @@
 
 	    refreshTable();
 
-	    $('#refresh-btn').click(refreshTable);
-
 	    $('#add-task-btn').click(function (e){
+		var data = $('new-task-input').val();
+		if(data !== "")
+		{
 			window.sctpClient.find_element_by_system_identifier('to_do_list').done(function(list_addr){
 				window.sctpClient.create_node(sc_type_node | sc_type_const | sc_type_node_abstract).done(function(node_addr){
 					alert(node_addr);
 					window.sctpClient.create_arc(sc_type_arc_pos_const_perm, list_addr, node_addr).done(function(arc_addr){
-
 						window.sctpClient.create_link().done(function(linkAddr) {
-
-								    window.sctpClient.set_link_content(linkAddr, "my task").done(function() {
-
+								    window.sctpClient.set_link_content(linkAddr, data).done(function() {
 									window.sctpClient.create_arc(( sc_type_arc_common | sc_type_const ), node_addr, linkAddr).done(function(arcAddr) {
-
 									    window.sctpClient.create_arc(sc_type_arc_pos_const_perm, window.scKeynodes.nrel_main_idtf, arcAddr).fail(function() {
 
 										console.log('fail create_arc(i18n link, main idtf)');
@@ -258,8 +258,9 @@
 								});
 					});
 				});
-			});		
-		});
+				});		
+			});	
+		}	
         });    
     </script>
 
