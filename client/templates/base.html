@@ -236,15 +236,11 @@
             });
             
             $(document).ajaxComplete(function () {
-                console.log('in append');
                 /*$('tbody').replaceWith($('tbody').clone());*/
                 $('tr').off();
-                console.log('removed');
                 $('tr').on('click', function () {
-                    console.log('in func');
                     $(this).toggleClass('selected');
                 });
-                console.log('added');
             });
         </script>
 
