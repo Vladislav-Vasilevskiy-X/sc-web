@@ -429,3 +429,7 @@ div[class="tooltip-inner"] {
 .gplus-login-button:active {
     background-image: url("../images/gplus/White-signin_Small_press_32dp.png");
 }
+
+tr.selected td{
+    text-decoration: line-through;
+}
