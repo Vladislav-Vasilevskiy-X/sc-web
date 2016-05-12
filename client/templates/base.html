@@ -153,13 +153,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3 class="modal-title">Список дел:</h3>
+                        <h3 class="modal-title">Список дел</h3>
                     </div>
                     <div class="modal-body">
                         <table id="tasks-table" class="table">
                             <thead>
                             <tr>
-                                <th>Ваша задача:</th>
+                                <th>Ваша задача</th>
                             </tr>
                     </thead>
                             <tbody>
@@ -194,7 +194,7 @@
                     window.sctpClient.find_element_by_system_identifier('to_do_list').done(function (list_addr) {
                         window.scHelper.getSetElements(list_addr).done(function (list_elements_addresses) {
                             $('#tasks-table tbody').remove();
-                            var out = '<thead><tr><th>Task</th></tr></thead>';
+                            var out = '<thead><tr><th>Ваша задача</th></tr></thead>';
                             for (i = 0; i < list_elements_addresses.length; i++) {
                                 window.scHelper.getIdentifier(list_elements_addresses[i], scKeynodes.lang_ru).done(function (idtf) {
                                     out += "<tr><td>" + idtf + "</td></tr>";
