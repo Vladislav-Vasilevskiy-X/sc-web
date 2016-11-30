@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap-multilevel.css" />
-        <link rel="stylesheet" type="text/css" href="/static/components/css/common.css" />
+	<link rel="stylesheet" type="text/css" href="/static/common/bootstrap/css/bootstrap-multilevel.css" />
         {% block extrastyles %}{% end %}
         {% include 'common.html' %}
         {% block extrapluginscripts %}{% end %}
@@ -174,7 +174,37 @@
                             <input type="text" class="form-control" id="new-task-input" placeholder="Новая задача">
                         </div>
                         <button type="button" id="add-task-btn" class="btn btn-default">Добавить задачу</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			<button type="button" id="add-google-event-btn" class="btn btn-default btn-md" data-toggle="modal" data-target="#tasks-modal2">Add event to google calendar</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+ 	<div class="modal fade" id="tasks-modal2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">New event</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+				<div class="form-group">
+					<label for="nameInput">Title</label>
+    					<input type="text" class="form-control" id="nameInput" placeholder="Enter event title">
+				</div>
+				<div class="input-daterange input-group" id="datepicker">
+				    <input type="text" class="input-sm form-control" name="start" placeholder="Select start date" />
+				    <span class="input-group-addon">to</span>
+				    <input type="text" class="input-sm form-control" name="end" placeholder="Select end date"/>
+				</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
 
@@ -233,6 +263,11 @@
                         });
                     }
                 });
+
+
+		$.fn.datepicker.defaults.format = "mm-dd-yyyy";
+		$('.input-daterange').datepicker({
+		});
             });
             
             $(document).ajaxComplete(function () {
