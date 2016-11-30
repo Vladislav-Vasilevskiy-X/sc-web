@@ -96,6 +96,8 @@ def main():
             
             (r"/api/user/", api.User),
             
+ 	    (r"/api/create_event", api.CreateEvent),
+
             (r"/auth/google$", auth.GoogleOAuth2LoginHandler),
             (r"/auth/logout$", auth.LogOut),
             
@@ -103,7 +105,6 @@ def main():
             (r"/admin/users/get$", admin_users.UsersInfo),
             (r"/admin/users/set_rights$", admin_users.UserSetRights),
             (r"/admin/users/list_rights$", admin_users.UserListRights),
-
             (r"/sctp", ws.SocketHandler),
             ]
 

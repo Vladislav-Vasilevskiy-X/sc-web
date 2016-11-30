@@ -11,8 +11,7 @@ from sctp.types import ScAddr, SctpIteratorType, ScElementType
 import api_logic as logic
 import time
 import base
-
-
+import script
 
 # -------------------------------------------        
 
@@ -503,3 +502,18 @@ class User(base.BaseHandler):
         
             self.set_header("Content-Type", "application/json")
             self.finish(json.dumps(result))
+
+class CreateEvent(base.BaseHandler):
+    
+    # @tornado.web.asynchronous
+    def post(self):
+
+	jsonFromRequest = "[{\"name\": \"%s\", \"start_date\": \"%s\", \"end_date\": \"%s\"}]" %(self.get_argument('name'), self.get_argument('startDate'), self.get_argument('endDate'))
+
+	result = script.compose_google_request(jsonFromRequest)
+	
+	http_client = tornado.httpclient.AsyncHTTPClient()
+    	http_client.fetch("https://www.googleapis.com/calendar/v3/calendars/bakericecream%40gmail.com/events?key={}"% (app_key), handle_request, method='POST', headers=None, body=result)
+
+	self.set_header("Content-Type", "application/json")
+        self.finish(json.dumps(result))
