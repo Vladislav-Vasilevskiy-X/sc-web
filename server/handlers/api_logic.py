@@ -609,7 +609,7 @@ class ScSession:
         self.sctp_client = sctp_client
         self.keynodes = keynodes
         self.sc_addr = None
-        self.email = None
+        self.email = "bakericecream@gmail.com"
         
         user = handler.get_current_user()
         if user is not None:

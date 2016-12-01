@@ -12,6 +12,7 @@ import api_logic as logic
 import time
 import base
 import script
+from auth import *
 
 # -------------------------------------------        
 
@@ -503,17 +504,22 @@ class User(base.BaseHandler):
             self.set_header("Content-Type", "application/json")
             self.finish(json.dumps(result))
 
-class CreateEvent(base.BaseHandler):
-    
+def handle_request(response):
+        if response.error:
+            print "Error:", response.error
+        else:
+            print response.body
+
+class CreateEvent(base.BaseHandler, tornado.auth.GoogleOAuth2Mixin):
+    @tornado.gen.coroutine
     # @tornado.web.asynchronous
     def post(self):
 
-	jsonFromRequest = "[{\"name\": \"%s\", \"start_date\": \"%s\", \"end_date\": \"%s\"}]" %(self.get_argument('name'), self.get_argument('startDate'), self.get_argument('endDate'))
+		jsonFromRequest = "[{\"name\": \"%s\", \"start_date\": \"%s\", \"end_date\": \"%s\"}]" %(self.get_argument('name'), self.get_argument('startDate'), self.get_argument('endDate'))
 
-	result = script.compose_google_request(jsonFromRequest)
+		event_body = script.compose_google_request(jsonFromRequest)
 	
-	http_client = tornado.httpclient.AsyncHTTPClient()
-    	http_client.fetch("https://www.googleapis.com/calendar/v3/calendars/bakericecream%40gmail.com/events?key={}"% (app_key), handle_request, method='POST', headers=None, body=result)
+		event = services[0].events().insert(calendarId='primary', body=event_body).execute();
 
-	self.set_header("Content-Type", "application/json")
-        self.finish(json.dumps(result))
+		self.set_header("Content-Type", "application/json")
+		self.finish(event)
